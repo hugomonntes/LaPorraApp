@@ -1,0 +1,98 @@
+---
+const participants: Array<{ name: string; match1: string; match2: string; amount: number; paid: boolean }> = JSON.parse(localStorage.getItem('participants') || '[]');
+let newParticipant: string = '';
+let match1: string = '';
+let match2: string = '';
+
+// Function to add a new participant
+const addParticipant = () => {
+    if (newParticipant && match1 && match2) {
+        participants.push({ name: newParticipant, match1, match2, amount: 0, paid: false });
+        localStorage.setItem('participants', JSON.stringify(participants));
+        newParticipant = ''; // Clear input after adding
+        match1 = '';
+        match2 = '';
+    }
+};
+
+// Function to update the amount for a participant
+const updateAmount = (index: number, amountToAdd: number) => {
+    participants[index].amount += amountToAdd;
+    localStorage.setItem('participants', JSON.stringify(participants));
+};
+
+// Function to toggle the payment status of a participant
+const togglePaid = (index: number) => {
+    participants[index].paid = !participants[index].paid;
+    localStorage.setItem('participants', JSON.stringify(participants));
+};
+
+// Function to calculate the total amount
+const totalAmount = () => {
+    return participants.reduce((acc, participant) => acc + participant.amount, 0);
+};
+---
+
+<div class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-2">Add Participant</h2>
+    <input
+        type="text"
+        placeholder="Participant Name"
+        value={newParticipant}
+        oninput={(e) => newParticipant = (e.target as HTMLInputElement).value} // Update newParticipant with the input value
+        class="border p-2 mb-2 w-full"
+    />
+    <input
+        type="text"
+        placeholder="Match 1"
+        value={match1}
+        oninput={(e) => match1 = (e.target as HTMLInputElement).value} // Update match1 with the input value
+        class="border p-2 mb-2 w-full"
+    />
+    <input
+        type="text"
+        placeholder="Match 2"
+        value={match2}
+        oninput={(e) => match2 = (e.target as HTMLInputElement).value} // Update match2 with the input value
+        class="border p-2 mb-2 w-full"
+    />
+    <button onclick={addParticipant} class="bg-blue-500 text-white p-2 rounded">Add Participant</button>
+
+    <h2 class="text-xl font-semibold mt-4">Participants</h2>
+    <table class="min-w-full bg-white border">
+        <thead>
+            <tr>
+                <th class="border">Name</th>
+                <th class="border">Match 1</th>
+                <th class="border">Match 2</th>
+                <th class="border">Amount</th>
+                <th class="border">Paid</th>
+                <th class="border">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {participants.map((participant, index) => (
+                <tr key={index}>
+                    <td class="border">{participant.name}</td>
+                    <td class="border">{participant.match1}</td>
+                    <td class="border">{participant.match2}</td>
+                    <td class="border">{participant.amount} €</td>
+                    <td class="border">
+                        <button
+                            onclick={() => togglePaid(index)}
+                            class={`p-1 rounded ${participant.paid ? 'bg-green-500' : 'bg-red-500'}`}
+                        >
+                            {participant.paid ? 'Paid' : 'Not Paid'}
+                        </button>
+                    </td>
+                    <td class="border">
+                        <button onclick={() => updateAmount(index, 1)} class="bg-green-500 text-white p-1 rounded">Add €1</button>
+                        <button onclick={() => updateAmount(index, -1)} class="bg-red-500 text-white p-1 rounded">Subtract €1</button>
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+
+    <h2 class="text-xl font-semibold mt-4">Total Amount: €{totalAmount()}</h2>
+</div>
