@@ -96,10 +96,17 @@ export default function Laporra() {
     updateLocalStorage("entries", []);
   };
 
+  // Función para reiniciar el localStorage
+  const resetLocalStorage = () => {
+    localStorage.clear();
+    alert("Local Storage reiniciado.");
+    window.location.reload();
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 p-4 sm:p-8">
-      <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center text-blue-400">
-        LAPORRA
+      <h1 className="font-light text-3xl sm:text-6xl mb-6 sm:mb-8 text-center text-blue-400">
+        LaPorra Del Vivas
       </h1>
 
       <Card className="bg-gray-800 mb-6 sm:mb-8">
@@ -222,6 +229,15 @@ export default function Laporra() {
         </Button>
       </div>
 
+      <div className="mt-4 flex justify-center">
+        <Button
+          onClick={resetLocalStorage}
+          className="bg-orange-500 text-gray-900 hover:bg-orange-400"
+        >
+          Reiniciar Local Storage
+        </Button>
+      </div>
+
       <Card className="bg-gray-800 mt-6 sm:mt-8">
         <CardHeader>
           <CardTitle className="text-blue-400">Admin Panel</CardTitle>
@@ -231,50 +247,58 @@ export default function Laporra() {
             <Checkbox
               id="paid"
               checked={paid === true}
-              onCheckedChange={(checked) =>
-                setPaid(checked === "indeterminate" ? false : checked)
-              }
+              onCheckedChange={() => setIsAdmin(!isAdmin)}
               className="border-blue-400 text-blue-400"
             />
-            <Label htmlFor="isAdmin" className="text-blue-400">
-              Modo Admin
+            <Label htmlFor="paid" className="text-blue-400">
+              Admin Mode
             </Label>
           </div>
           {isAdmin && (
             <form onSubmit={handleAdminSubmit} className="space-y-4">
               <div>
-                <Label className="text-blue-400">Partido 1</Label>
-                <div className="flex space-x-2">
-                  <Input
-                    name="match1Local"
-                    defaultValue={matches.match1.local}
-                    className="bg-gray-700 text-gray-100 border-gray-600 focus:border-blue-400 flex-1"
-                    required
-                  />
-                  <Input
-                    name="match1Visitor"
-                    defaultValue={matches.match1.visitor}
-                    className="bg-gray-700 text-gray-100 border-gray-600 focus:border-blue-400 flex-1"
-                    required
-                  />
-                </div>
+                <Label htmlFor="match1Local" className="text-blue-400">
+                  Equipo Local Partido 1
+                </Label>
+                <Input
+                  id="match1Local"
+                  defaultValue={matches.match1.local}
+                  className="bg-gray-700 text-gray-100 border-gray-600 focus:border-blue-400"
+                  required
+                />
               </div>
               <div>
-                <Label className="text-blue-400">Partido 2</Label>
-                <div className="flex space-x-2">
-                  <Input
-                    name="match2Local"
-                    defaultValue={matches.match2.local}
-                    className="bg-gray-700 text-gray-100 border-gray-600 focus:border-blue-400 flex-1"
-                    required
-                  />
-                  <Input
-                    name="match2Visitor"
-                    defaultValue={matches.match2.visitor}
-                    className="bg-gray-700 text-gray-100 border-gray-600 focus:border-blue-400 flex-1"
-                    required
-                  />
-                </div>
+                <Label htmlFor="match1Visitor" className="text-blue-400">
+                  Equipo Visitante Partido 1
+                </Label>
+                <Input
+                  id="match1Visitor"
+                  defaultValue={matches.match1.visitor}
+                  className="bg-gray-700 text-gray-100 border-gray-600 focus:border-blue-400"
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="match2Local" className="text-blue-400">
+                  Equipo Local Partido 2
+                </Label>
+                <Input
+                  id="match2Local"
+                  defaultValue={matches.match2.local}
+                  className="bg-gray-700 text-gray-100 border-gray-600 focus:border-blue-400"
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="match2Visitor" className="text-blue-400">
+                  Equipo Visitante Partido 2
+                </Label>
+                <Input
+                  id="match2Visitor"
+                  defaultValue={matches.match2.visitor}
+                  className="bg-gray-700 text-gray-100 border-gray-600 focus:border-blue-400"
+                  required
+                />
               </div>
               <Button
                 type="submit"
@@ -286,6 +310,7 @@ export default function Laporra() {
           )}
         </CardContent>
       </Card>
+      <p className="text-white m-5 ml-0">Developed by Hugo Montes ©️</p>
     </div>
   );
 }
