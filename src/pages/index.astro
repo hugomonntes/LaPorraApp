@@ -1,13 +1,18 @@
 ---
-import Component from '../componentes/laporra.jsx';
+import Laporra from '../components/ui/laporra';
 ---
+
 
 <html lang="es">
 <head>
-    <title>LAPORRA</title>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="src/styles/global.css">
+    <title>La Porra</title>
 </head>
 <body>
-    <h1>Bienvenido a LAPORRA</h1>
-    <Component client:load /> <!-- Esto carga el componente solo en el lado del usuario -->
+    <Laporra client:load />
 </body>
 </html>
