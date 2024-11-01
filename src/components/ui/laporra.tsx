@@ -120,7 +120,7 @@ export default function Laporra() {
           <p>
             Partido 2: {matches.match2.local} vs {matches.match2.visitor}
           </p>
-          <p className="mt-4 text-xl font-bold text-green-400">
+          <p className="mt-4 text-xl font-bold text-blue-400">
             Bote Total: {totalPot} €
           </p>
         </CardContent>
